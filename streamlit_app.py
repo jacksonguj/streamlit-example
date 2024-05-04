@@ -17,6 +17,22 @@ if rad=="Home":
     st.header("Find Answer to Your Symptoms")
     st.text("Input your symptoms and discover possible conditions and treatments.")
 
+df = pd.read_csv('Disease_Symptom.csv')    
+# 특성과 타겟 데이터 준비
+X = df.drop('Disease', axis=1)
+X = np.array(X)
+y = df['Disease']
+y = np.array(y)
+    
+# 훈련 데이터와 테스트 데이터로 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+    
+# RandomForestClassifier 모델 생성
+rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
+    
+# 모델 훈련
+rf_classifier.fit(X_train, y_train)
+    
 
 if rad == "Symptom-Based Disease Guide":
     # 위의 코드와 같은 내용
@@ -24,22 +40,6 @@ if rad == "Symptom-Based Disease Guide":
     #### 병 예측
     # CSV 파일 읽기
     df = pd.read_csv('Disease_Symptom.csv')
-
-    # 특성과 타겟 데이터 준비
-    X = df.drop('Disease', axis=1)
-    y = df['Disease']
-    
-    # 특성 데이터 인코딩 (더미 변수로 변환)
-    X_encoded = pd.get_dummies(X)
-    
-    # 훈련 데이터와 테스트 데이터로 분할
-    X_train, X_test, y_train, y_test = train_test_split(X_encoded, y, test_size=0.2, random_state=42)
-    
-    # RandomForestClassifier 모델 생성
-    rf_classifier = RandomForestClassifier(n_estimators=100, random_state=42)
-    
-    # 모델 훈련
-    rf_classifier.fit(X_train, y_train)
     
     # 사용자가 선택한 증상들 입력 받기
     options = st.multiselect(
@@ -54,6 +54,9 @@ if rad == "Symptom-Based Disease Guide":
     selected_symptoms.loc[0] = 0  # 첫 번째 행에 0으로 초기화
     for symptom in options:
         selected_symptoms[symptom] = 1  # 사용자가 선택한 증상들에 해당하는 열을 1로 설정
+
+    # np.array로 변환
+    selected_symptoms = np.array(selected_symptoms)
     
     predicted_probabilities = rf_classifier.predict_proba(selected_symptoms)
     
