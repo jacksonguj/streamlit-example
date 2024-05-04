@@ -27,8 +27,12 @@ filtered_df = df[df['Symptom_1'].isin(options) |
 disease_counts = filtered_df['Disease'].value_counts().reset_index()
 disease_counts.columns = ['Disease', 'Count']
 
+# 상위 N개의 질병 선택 (여기서는 10개로 설정)
+top_n = 5
+top_diseases = disease_counts.head(top_n)
+
 # 막대 그래프 생성
-bar_chart = alt.Chart(disease_counts).mark_bar().encode(
+bar_chart = alt.Chart(top_diseases).mark_bar().encode(
     x='Count',
     y=alt.Y('Disease', sort='-x'),
     color='Disease'
