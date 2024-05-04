@@ -14,6 +14,7 @@ options = st.multiselect(
 
 st.write("You selected:", options)
 
+#### 병
 # CSV 파일 읽기
 df = pd.read_csv('Disease_Symptom.csv')
 
@@ -42,3 +43,18 @@ bar_chart = alt.Chart(top_diseases).mark_bar().encode(
 
 # 시각화 결과 출력
 st.write(bar_chart)
+
+#### 식단
+# CSV 파일 읽기
+df = pd.read_csv('Disease_Diet.csv')
+
+# 질병에 따른 식단 데이터
+disease_diets = dict(zip(df['Disease'], df['Diet']))
+
+# 선택된 질병에 따라 식단 표시
+selected_diseases = st.multiselect("Select Diseases", df['Disease'].tolist())
+for disease in selected_diseases:
+    if disease in disease_diets:
+        st.write(f"식단 권장 사항 ({disease}): {disease_diets[disease]}")
+    else:
+        st.write(f"{disease}에 대한 식단 권장 사항이 없습니다.")
