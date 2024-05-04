@@ -6,7 +6,7 @@ from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
 
 #building the sidebar of the web app which will help us navigate through the different sections of the entire application
-rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide"])
+rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide", "Symptom-Based Medicine Guide"])
 
 #Home Page
 
@@ -20,7 +20,7 @@ if rad=="Home":
 
 if rad=="Symptom-Based Disease Guide":
     st.title('SymptomSnap')
-
+    st.subheader("Predicting Diseases from Symptoms")
     options = st.multiselect(
         "Choose Your Symptoms",
         ['itching', ' skin_rash', ' nodal_skin_eruptions', ' dischromic _patches', ' continuous_sneezing', ' shivering', ' chills', ' watering_from_eyes', ' stomach_pain', ' acidity', ' ulcers_on_tongue', ' vomiting', ' cough', ' yellowish_skin', ' nausea', ' loss_of_appetite', ' burning_micturition', ' spotting_ urination', ' abdominal_pain', ' passage_of_gases', ' indigestion', ' muscle_wasting', ' patches_in_throat', ' high_fever', ' extra_marital_contacts', ' fatigue', ' weight_loss', ' restlessness', ' lethargy', ' irregular_sugar_level', ' sunken_eyes', ' dehydration', ' diarrhoea', ' breathlessness', ' family_history', ' headache', ' chest_pain', ' dizziness', ' loss_of_balance', ' lack_of_concentration', ' blurred_and_distorted_vision', ' excessive_hunger', ' back_pain', ' weakness_in_limbs', ' neck_pain', ' weakness_of_one_body_side', ' altered_sensorium', ' sweating', ' joint_pain', ' dark_urine', ' yellowing_of_eyes', ' swelling_of_stomach', ' distention_of_abdomen', ' constipation', ' pain_during_bowel_movements', ' pain_in_anal_region', ' bloody_stool', ' irritation_in_anus', ' cramps', ' bruising', ' obesity', ' swollen_legs', ' weight_gain', ' cold_hands_and_feets', ' mood_swings', ' anxiety', ' knee_pain', ' hip_joint_pain', ' swelling_joints', ' muscle_weakness', ' stiff_neck', ' movement_stiffness', ' painful_walking', ' spinning_movements', ' pus_filled_pimples', ' blackheads', ' scurring', ' bladder_discomfort', ' foul_smell_of urine', ' continuous_feel_of_urine', ' skin_peeling', ' silver_like_dusting', ' small_dents_in_nails', ' blister', ' red_sore_around_nose', ' yellow_crust_ooze']
@@ -58,7 +58,21 @@ if rad=="Symptom-Based Disease Guide":
     # 시각화 결과 출력
     st.write(bar_chart)
 
+    #### 병 설명
+    st.subheader("Explaining Your Diagnosis")
+    df = pd.read_csv('Disease_Description.csv')
+    disease_description = dict(zip(df['Disease'], df['Description']))
+
+    # 선택된 질병에 따라 식단 표시
+    selected_diseases = st.multiselect("Select Diseases", df['Disease'].tolist())
+    for disease in selected_diseases:
+        if disease in disease_description:
+            st.write(f"Diagnosis Details ({disease}): {disease_description[disease]}")
+        else:
+            st.write(f"No diagnosis details available for {disease}.")
+
     #### 식단
+    st.subheader("Recommendation of Foods for Your Condition")
     # CSV 파일 읽기
     df = pd.read_csv('Disease_Diet.csv')
 
@@ -72,3 +86,8 @@ if rad=="Symptom-Based Disease Guide":
             st.write(f"Dietary Recommendations ({disease}): {disease_diets[disease]}")
         else:
             st.write(f"No dietary recommendations available for {disease}.")
+
+
+if rad=="Symptom-Based Disease Guide":
+    st.title('SymptomSnap')
+    st.subheader("Predicting Diseases from Symptoms")
