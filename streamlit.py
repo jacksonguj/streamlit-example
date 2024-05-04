@@ -63,13 +63,34 @@ if rad=="Symptom-Based Disease Guide":
     df = pd.read_csv('Disease_Description.csv')
     disease_description = dict(zip(df['Disease'], df['Description']))
 
-    # 선택된 질병에 따라 식단 표시
+    # Diagnosis Details
     selected_diseases = st.multiselect("Select Diseases", df['Disease'].tolist(), key="diagnosis_multiselect")
     for disease in selected_diseases:
         if disease in disease_description:
             st.write(f"Diagnosis Details ({disease}): {disease_description[disease]}")
         else:
             st.write(f"No diagnosis details available for {disease}.")
+
+    #### 예방 조치
+    # 선택된 질병에 대한 예방 조치 출력
+    st.subheader("Precautions for Your Condition")
+    # CSV 파일 읽기
+    df_precautions = pd.read_csv('Disease_Precaution.csv')
+
+    # 질병에 따른 예방 조치 데이터
+    disease_precautions = dict(zip(df_precautions['Disease'],
+                                   df_precautions[['Precaution_1', 'Precaution_2', 'Precaution_3', 'Precaution_4']]))
+
+    # 선택된 질병에 대해 예방 조치 출력
+    selected_diseases = st.multiselect("Select Diseases", df_precautions['Disease'].tolist(),
+                                       key="precaution_multiselect")
+    for disease in selected_diseases:
+        if disease in disease_precautions:
+            st.write(f"Precautions for {disease}:")
+            for precaution in disease_precautions[disease]:
+                st.write(f"- {precaution}")
+        else:
+            st.write(f"No precautions available for {disease}.")
 
     #### 식단
     st.subheader("Recommendation of Foods for Your Condition")
@@ -90,4 +111,4 @@ if rad=="Symptom-Based Disease Guide":
 
 if rad=="Symptom-Based Medicine Guide":
     st.title('SymptomSnap')
-    st.subheader("Predicting Diseases from Symptoms")
+    st.subheader("Predicting Medicines from Symptoms")
