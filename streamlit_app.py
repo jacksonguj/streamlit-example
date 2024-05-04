@@ -22,7 +22,6 @@ df = pd.read_csv('Disease_Symptom.csv')
 X = df.drop('Disease', axis=1)
 X = np.array(X)
 y = pd.DataFrame(df['Disease'])
-y = np.array(y)
     
 # 훈련 데이터와 테스트 데이터로 분할
 X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
@@ -55,8 +54,7 @@ if rad == "Symptom-Based Disease Guide":
     for symptom in options:
         selected_symptoms[symptom] = 1  # 사용자가 선택한 증상들에 해당하는 열을 1로 설정
 
-    # np.array로 변환
-    selected_symptoms = np.array(selected_symptoms)
+
     
     predicted_probabilities = rf_classifier.predict_proba(selected_symptoms)
     
@@ -69,6 +67,8 @@ if rad == "Symptom-Based Disease Guide":
     for disease, probability in zip(top_5_diseases, top_5_probabilities):
         st.write(f"Disease: {rf_classifier.classes_[disease]}, Probability: {probability:.4f}")
 
+
+    
     #### 병 설명
     st.subheader("Explaining Your Diagnosis")
     df = pd.read_csv('Disease_Description.csv')
