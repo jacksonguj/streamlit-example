@@ -75,15 +75,20 @@ if rad=="Symptom-Based Disease Guide":
     # 선택된 질병에 대한 예방 조치 출력
     st.subheader("Precautions for Your Condition")
     # CSV 파일 읽기
-    df_precautions = pd.read_csv('Disease_Precaution.csv')
+    df_precautions = pd.read_csv('Disease_Precautions.csv')
+
+    # 줄 바꿈 문자 제거
+    df_precautions.columns = df_precautions.columns.str.replace('\n', '')
 
     # 질병에 따른 예방 조치 데이터
-    disease_precautions = dict(zip(df_precautions['Disease'],
-                                   df_precautions[['Precaution_1', 'Precaution_2', 'Precaution_3', 'Precaution_4']]))
+    disease_precautions = {}
+    for index, row in df_precautions.iterrows():
+        disease = row['Disease']
+        precautions = [row['Precaution_1'], row['Precaution_2'], row['Precaution_3'], row['Precaution_4']]
+        disease_precautions[disease] = precautions
 
     # 선택된 질병에 대해 예방 조치 출력
-    selected_diseases = st.multiselect("Select Diseases", df_precautions['Disease'].tolist(),
-                                       key="precaution_multiselect")
+    selected_diseases = st.multiselect("Select Diseases", df_precautions['Disease'].tolist(), key="precaution_multiselect")
     for disease in selected_diseases:
         if disease in disease_precautions:
             st.write(f"Precautions for {disease}:")
