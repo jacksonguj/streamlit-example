@@ -55,6 +55,6 @@ disease_diets = dict(zip(df['Disease'], df['Diet']))
 selected_diseases = st.multiselect("Select Diseases", df['Disease'].tolist())
 for disease in selected_diseases:
     if disease in disease_diets:
-        st.write(f"식단 권장 사항 ({disease}): {disease_diets[disease]}")
+        st.write(f"Dietary Recommendations ({disease}): {disease_diets[disease]}")
     else:
-        st.write(f"{disease}에 대한 식단 권장 사항이 없습니다.")
+        st.write(f"No dietary recommendations available for {disease}.")
