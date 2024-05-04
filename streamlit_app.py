@@ -20,7 +20,6 @@ if rad=="Home":
 df = pd.read_csv('Disease_Symptom.csv')    
 # 특성과 타겟 데이터 준비
 X = df.drop('Disease', axis=1)
-X = np.array(X)
 y = pd.DataFrame(df['Disease'])
     
 # 훈련 데이터와 테스트 데이터로 분할
