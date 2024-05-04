@@ -33,7 +33,7 @@ bar_chart = alt.Chart(disease_counts).mark_bar().encode(
     y=alt.Y('Disease', sort='-x'),
     color='Disease'
 ).properties(
-    title='가능성이 높은 병 TOP 5'
+    title='Top 5 most likely diseases'
 )
 
 # 시각화 결과 출력
