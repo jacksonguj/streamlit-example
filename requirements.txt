@@ -1,4 +1,6 @@
 altair
 pandas
 streamlit
-scikit-learn
+scikit_learn
+plotly
+matlablib
