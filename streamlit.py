@@ -88,6 +88,6 @@ if rad=="Symptom-Based Disease Guide":
             st.write(f"No dietary recommendations available for {disease}.")
 
 
-if rad=="Symptom-Based Disease Guide":
+if rad=="Symptom-Based Medicine Guide":
     st.title('SymptomSnap')
     st.subheader("Predicting Diseases from Symptoms")
