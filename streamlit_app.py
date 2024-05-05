@@ -158,10 +158,10 @@ if rad=="Symptom-Based Disease Guide":
 
 # Train model for predicting medicine
 # CSV 파일 로드
-data = pd.read_csv("Disease_Symptom.csv")
+data = pd.read_csv("Drug_Condition.csv")
 
 # 데이터 전처리: 각 증상을 이진 특성으로 인코딩
-symptoms = data.drop("Disease", axis=1).stack().str.get_dummies().groupby(level=0).max()
+condition = data.drop("Disease", axis=1).stack().str.get_dummies().groupby(level=0).max()
 
 X = symptoms  # 이진 특성을 사용
 y = data["Disease"]
