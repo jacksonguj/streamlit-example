@@ -205,7 +205,7 @@ if rad=="Condition-Based Medicine Guide":
     new_conditions = options
     
     # new_conditions를 이진 특성으로 인코딩
-    new_conditions_encoded = pd.DataFrame(0, index=[0], columns=X.columns)
+    new_conditions_encoded = pd.DataFrame(0, index=[0], columns=X2.columns)
     for condition in new_conditions:
         if condition.strip() in new_conditions_encoded.columns:
             new_conditions_encoded[condition.strip()] = 1
