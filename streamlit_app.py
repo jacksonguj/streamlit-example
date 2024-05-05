@@ -91,10 +91,8 @@ if rad=="Symptom-Based Disease Guide":
     plt.xlabel('Disease')
     plt.ylabel('Probability (%)')
     
-    # 그래프 출력
-    plt.xticks(rotation=45)
-    plt.tight_layout()
-    plt.show()
+    # 그래프를 Streamlit에 표시
+    st.pyplot(plt)
 
 
 
