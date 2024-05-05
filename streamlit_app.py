@@ -57,10 +57,48 @@ if rad=="Symptom-Based Disease Guide":
         if symptom.strip() in new_symptoms_encoded.columns:
             new_symptoms_encoded[symptom.strip()] = 1
     
-    # 모델을 사용하여 새로운 증상에 대한 예측 수행
-    prediction = model.predict(new_symptoms_encoded)
-    st.write("예측된 병명:", prediction)
+    # 모델을 사용하여 새로운 증상에 대한 예측 확률 계산
+    prediction_proba = model.predict_proba(new_symptoms_encoded)[0]
+    predictions_df = pd.DataFrame({"Disease": model.classes_, "Probability": prediction_proba})
 
+    # 가장 가능성이 높은 병 선택
+    most_likely_disease = predictions_df.loc[predictions_df['Probability'].idxmax()]
+
+    # 예측 확률을 백분율로 변환
+    most_likely_disease["Probability"] *= 100
+
+    # 가장 가능성이 높은 병을 따로 출력
+    st.write("Most Likely Disease:")
+    st.write(most_likely_disease)
+    
+    # 예측 확률을 기준으로 내림차순 정렬하여 상위 5개 병 선택
+    top_5_diseases = predictions_df.sort_values(by="Probability", ascending=False).head(5)
+    
+    # 예측 확률을 백분율로 변환
+    top_5_diseases["Probability"] = top_5_diseases["Probability"] * 100
+    
+    # 표로 나타내기
+    st.write("Top 5 Most Likely Diseases:")
+    st.write(top_5_diseases)
+
+    # 그래프 생성
+    plt.figure(figsize=(10, 6))
+    plt.bar(top_5_diseases["Disease"], top_5_diseases["Probability"], color='skyblue')
+    
+    # 그래프 제목과 축 라벨 설정
+    plt.title('Top 5 Most Likely Diseases')
+    plt.xlabel('Disease')
+    plt.ylabel('Probability (%)')
+    
+    # 그래프 출력
+    plt.xticks(rotation=45)
+    plt.tight_layout()
+    plt.show()
+
+
+
+
+    
     #### 병 설명
     st.subheader("Explaining Your Diagnosis")
     df = pd.read_csv('Disease_Description.csv')
