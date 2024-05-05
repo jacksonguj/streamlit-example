@@ -160,24 +160,90 @@ if rad=="Symptom-Based Disease Guide":
 # CSV 파일 로드
 data = pd.read_csv("Drug_Condition.csv")
 
-# 데이터 전처리: 각 증상을 이진 특성으로 인코딩
-condition = data.drop("Disease", axis=1).stack().str.get_dummies().groupby(level=0).max()
+# 데이터 전처리: 각 컨디션을 이진 특성으로 인코딩
+condition = data.drop(["drugName", "uniqueID"], axis=1).stack().str.get_dummies().groupby(level=0).max()
 
-X = symptoms  # 이진 특성을 사용
-y = data["Disease"]
+X2 = condition  # 이진 특성을 사용
+y2 = data["drugName"]
 
 # 훈련 세트와 테스트 세트로 분할
-X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+X_train2, X_test2, y_train2, y_test2 = train_test_split(X2, y2, test_size=0.2, random_state=42)
 
 # 랜덤 포레스트 분류기 모델 생성 및 훈련
-model = RandomForestClassifier(n_estimators=100, random_state=42)
-model.fit(X_train, y_train)
+model2 = RandomForestClassifier(n_estimators=100, random_state=42)
+model2.fit(X_train2, y_train2)
 
 
 if rad=="Condition-Based Medicine Guide":
     st.title('SymptomSnap')
     st.subheader("Predicting Medicines from Condition")
 
+    # CSV 파일 로드
+    df = pd.read_csv("Drug_Condition.csv")
+    
+    # condition 열의 값들을 리스트로 추출
+    conditions = df['condition'].tolist()
+    
+    # 중복 제거
+    conditions = list(set(conditions))
+    
+    # 빈 값을 제거
+    conditions = [condition for condition in conditions if pd.notna(condition)]
+
+    
+    options = st.multiselect(
+        "Choose Your Conditions",
+        conditions
+        , [], key="condition_multiselect")
+
+    st.write("You selected:", options)
+
+    # options에 선택된 증상들을 new_symptoms에 할당
+    new_conditions = options
+    
+    # new_conditions를 이진 특성으로 인코딩
+    new_conditions_encoded = pd.DataFrame(0, index=[0], columns=X.columns)
+    for condition in new_conditions:
+        if condition.strip() in new_conditions_encoded.columns:
+            new_conditions_encoded[condition.strip()] = 1
+    
+    # 모델을 사용하여 새로운 증상에 대한 예측 확률 계산
+    prediction_proba = model.predict_proba(new_conditions_encoded)[0]
+    predictions_df = pd.DataFrame({"Drug": model.classes_, "Probability": prediction_proba})
+
+    # 가장 가능성이 높은 약 선택
+    most_likely_drug = predictions_df.loc[predictions_df['Probability'].idxmax()]
+
+    # 예측 확률을 백분율로 변환
+    most_likely_drug["Probability"] *= 100
+
+    # 가장 가능성이 높은 병을 따로 출력
+    st.write("Most Suitable medicine:")
+    st.write(most_likely_drug)
+    
+    # 예측 확률을 기준으로 내림차순 정렬하여 상위 5개 병 선택
+    top_5_drug = predictions_df.sort_values(by="Probability", ascending=False).head(5)
+    
+    # 예측 확률을 백분율로 변환
+    top_5_drug["Probability"] = top_5_drug["Probability"] * 100
+    
+    # 표로 나타내기
+    st.write("Top 5 Most Suitable Medicines:")
+    st.write(top_5_drug)
+
+    # 그래프 생성
+    plt.figure(figsize=(10, 6))
+    plt.bar(top_5_drug["Drug"], top_5_drug["Probability"], color='skyblue')
+    
+    # 그래프 제목과 축 라벨 설정
+    plt.title('Top 5 Most Suitable Medicines')
+    plt.xlabel('Medicine')
+    plt.ylabel('Probability (%)')
+    
+    # 그래프를 Streamlit에 표시
+    st.pyplot(plt)
+
+    
     # URL 링크 생성
     url = 'https://www.drugs.com'
     link_text = 'Get detailed information about the drug'
