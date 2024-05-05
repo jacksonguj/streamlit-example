@@ -257,7 +257,7 @@ if rad=="Condition-Based Medicine Guide":
     selected_medicines = st.multiselect("Select Medicine", top_5_drug, key="sideeffects_multiselect")
     for medicine in selected_medicines:
         if medicine in sideeffect_description:
-            st.write(f"Side Effects of Medicine ({medicine}): {sideeffect_description[drug_name]}")
+            st.write(f"Side Effects of Medicine ({medicine}): {sideeffect_description[medicine]}")
         else:
             st.write(f"No side effects of medicine available for {medicine}.")
     
