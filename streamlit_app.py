@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
 
 #building the sidebar of the web app which will help us navigate through the different sections of the entire application
-rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide", "Symptom-Based Medicine Guide"])
+rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide", "Condition-Based Medicine Guide"])
 
 #Home Page
 
@@ -17,6 +17,9 @@ if rad=="Home":
     st.image("Medical Prediction Home Page.jpg")
     st.header("Find Answer to Your Symptoms")
     st.text("Input your symptoms and discover possible conditions and treatments.")
+    st.text("The Following Guides Are Available ->")
+    st.text("1. Symptom-Based Disease Guide")
+    st.text("2. Condition-Based Medicine Guide")
 
 # CSV 파일 로드
 data = pd.read_csv("Disease_Symptom.csv")
@@ -154,6 +157,6 @@ if rad=="Symptom-Based Disease Guide":
             st.write(f"No dietary recommendations available for {disease}.")
 
 
-if rad=="Symptom-Based Medicine Guide":
+if rad=="Condition-Based Medicine Guide":
     st.title('SymptomSnap')
-    st.subheader("Predicting Medicines from Symptoms")
+    st.subheader("Predicting Medicines from Condition")
