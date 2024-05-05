@@ -4,6 +4,7 @@ import pandas as pd
 import streamlit as st
 from sklearn.model_selection import train_test_split
 from sklearn.ensemble import RandomForestClassifier
+import matplotlib.pyplot as plt
 
 #building the sidebar of the web app which will help us navigate through the different sections of the entire application
 rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide", "Symptom-Based Medicine Guide"])
