@@ -248,16 +248,16 @@ if rad=="Condition-Based Medicine Guide":
 
     #### Side Effect of Medicine
     st.subheader("Side Effect of Medicine")
-    df = pd.read_csv('Disease_Description.csv')
-    disease_description = dict(zip(df['Disease'], df['Description']))
+    df = pd.read_csv('Drug_SideEffect.csv')
+    sideeffect_description = dict(zip(df['drug_name'], df['side_effects']))
 
-    # Diagnosis Details
-    selected_diseases = st.multiselect("Select Diseases", df['Disease'].tolist(), key="diagnosis_multiselect")
-    for disease in selected_diseases:
-        if disease in disease_description:
-            st.write(f"Diagnosis Details ({disease}): {disease_description[disease]}")
+    # Side Effects
+    selected_medicines = st.multiselect("Select Medicine", top_5_drug, key="sideeffects_multiselect")
+    for medicine in selected_medicines:
+        if medicine in sideeffect_description:
+            st.write(f"Side Effects of Medicine ({medicine}): {sideeffect_description[drug_name]}")
         else:
-            st.write(f"No diagnosis details available for {disease}.")
+            st.write(f"No side effects of medicine available for {medicine}.")
     
     # URL 링크 생성
     url = 'https://www.drugs.com'
