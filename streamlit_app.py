@@ -246,6 +246,18 @@ if rad=="Condition-Based Medicine Guide":
     # 그래프를 Streamlit에 표시
     st.pyplot(plt)
 
+    #### Side Effect of Medicine
+    st.subheader("Side Effect of Medicine")
+    df = pd.read_csv('Disease_Description.csv')
+    disease_description = dict(zip(df['Disease'], df['Description']))
+
+    # Diagnosis Details
+    selected_diseases = st.multiselect("Select Diseases", df['Disease'].tolist(), key="diagnosis_multiselect")
+    for disease in selected_diseases:
+        if disease in disease_description:
+            st.write(f"Diagnosis Details ({disease}): {disease_description[disease]}")
+        else:
+            st.write(f"No diagnosis details available for {disease}.")
     
     # URL 링크 생성
     url = 'https://www.drugs.com'
