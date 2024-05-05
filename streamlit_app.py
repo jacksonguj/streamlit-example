@@ -160,8 +160,11 @@ if rad=="Symptom-Based Disease Guide":
 # CSV 파일 로드
 data = pd.read_csv("Drug_Condition.csv")
 
+# condition이 공백인 행 삭제
+data.dropna(subset=['condition'], inplace=True)
+
 # 데이터 전처리: 각 컨디션을 이진 특성으로 인코딩
-condition = data.drop(["drugName", "uniqueID"], axis=1)
+condition = data.drop(["drugName", "uniqueID"], axis=1).stack().str.get_dummies().groupby(level=0).max()
 
 X2 = condition  # 이진 특성을 사용
 y2 = data["drugName"]
@@ -208,8 +211,8 @@ if rad=="Condition-Based Medicine Guide":
             new_conditions_encoded[condition.strip()] = 1
     
     # 모델을 사용하여 새로운 증상에 대한 예측 확률 계산
-    prediction_proba = model.predict_proba(new_conditions_encoded)[0]
-    predictions_df = pd.DataFrame({"Drug": model.classes_, "Probability": prediction_proba})
+    prediction_proba = model2.predict_proba(new_conditions_encoded)[0]
+    predictions_df = pd.DataFrame({"Drug": model2.classes_, "Probability": prediction_proba})
 
     # 가장 가능성이 높은 약 선택
     most_likely_drug = predictions_df.loc[predictions_df['Probability'].idxmax()]
