@@ -156,6 +156,23 @@ if rad=="Symptom-Based Disease Guide":
         else:
             st.write(f"No dietary recommendations available for {disease}.")
 
+# Train model for predicting medicine
+# CSV 파일 로드
+data = pd.read_csv("Disease_Symptom.csv")
+
+# 데이터 전처리: 각 증상을 이진 특성으로 인코딩
+symptoms = data.drop("Disease", axis=1).stack().str.get_dummies().groupby(level=0).max()
+
+X = symptoms  # 이진 특성을 사용
+y = data["Disease"]
+
+# 훈련 세트와 테스트 세트로 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 랜덤 포레스트 분류기 모델 생성 및 훈련
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
 
 if rad=="Condition-Based Medicine Guide":
     st.title('SymptomSnap')
