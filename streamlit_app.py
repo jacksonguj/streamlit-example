@@ -246,9 +246,11 @@ if rad=="Condition-Based Medicine Guide":
     # 그래프를 Streamlit에 표시
     st.pyplot(plt)
 
+
+    
     #### Side Effect of Medicine
     st.subheader("Side Effect of Medicine")
-    df = pd.read_csv('Drug_SideEffect.csv')
+    df = pd.read_csv("Drug_SideEffect.csv")
     sideeffect_description = dict(zip(df['drug_name'], df['side_effects']))
 
     # Side Effects
