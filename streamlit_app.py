@@ -250,7 +250,7 @@ if rad=="Condition-Based Medicine Guide":
     
     #### Side Effect of Medicine
     st.subheader("Side Effect of Medicine")
-    df = pd.read_csv("Drug_SideEffect.csv")
+    df = pd.read_csv("Drug_Sideeffect.csv")
     sideeffect_description = dict(zip(df['drug_name'], df['side_effects']))
 
     # Side Effects
