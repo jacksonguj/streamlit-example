@@ -161,7 +161,7 @@ if rad=="Symptom-Based Disease Guide":
 data = pd.read_csv("Drug_Condition.csv")
 
 # 데이터 전처리: 각 컨디션을 이진 특성으로 인코딩
-condition = data.drop(["drugName", "uniqueID"], axis=1).stack().str.get_dummies().groupby(level=0).max()
+condition = data.drop(["drugName", "uniqueID"], axis=1)
 
 X2 = condition  # 이진 특성을 사용
 y2 = data["drugName"]
