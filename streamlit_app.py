@@ -160,3 +160,11 @@ if rad=="Symptom-Based Disease Guide":
 if rad=="Condition-Based Medicine Guide":
     st.title('SymptomSnap')
     st.subheader("Predicting Medicines from Condition")
+
+    # URL 링크 생성
+    url = 'https://www.drugs.com'
+    link_text = 'Get detailed information about the drug'
+    link = f'<a href="{url}" target="_blank">{link_text}</a>'
+    
+    # 생성된 링크를 출력
+    st.markdown(link, unsafe_allow_html=True)
