@@ -17,6 +17,22 @@ if rad=="Home":
     st.header("Find Answer to Your Symptoms")
     st.text("Input your symptoms and discover possible conditions and treatments.")
 
+# CSV 파일 로드
+data = pd.read_csv("Disease_Symptom.csv")
+
+# 데이터 전처리: 각 증상을 이진 특성으로 인코딩
+symptoms = data.drop("Disease", axis=1).stack().str.get_dummies().groupby(level=0).max()
+
+X = symptoms  # 이진 특성을 사용
+y = data["Disease"]
+
+# 훈련 세트와 테스트 세트로 분할
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=42)
+
+# 랜덤 포레스트 분류기 모델 생성 및 훈련
+model = RandomForestClassifier(n_estimators=100, random_state=42)
+model.fit(X_train, y_train)
+
 
 if rad=="Symptom-Based Disease Guide":
     st.title('SymptomSnap')
@@ -32,31 +48,18 @@ if rad=="Symptom-Based Disease Guide":
     # CSV 파일 읽기
     df = pd.read_csv('Disease_Symptom.csv')
 
-    # 사용자가 선택한 증상 필터링
-    filtered_df = df[df['Symptom_1'].isin(options) |
-                     df['Symptom_2'].isin(options) |
-                     df['Symptom_3'].isin(options) |
-                     df['Symptom_4'].isin(options)]
-
-    # 병별로 증상의 유사도 계산
-    disease_counts = filtered_df['Disease'].value_counts().reset_index()
-    disease_counts.columns = ['Disease', 'Count']
-
-    # 상위 N개의 질병 선택 (여기서는 10개로 설정)
-    top_n = 5
-    top_diseases = disease_counts.head(top_n)
-
-    # 막대 그래프 생성
-    bar_chart = alt.Chart(top_diseases).mark_bar().encode(
-        x='Count',
-        y=alt.Y('Disease', sort='-x'),
-        color='Disease'
-    ).properties(
-        title='Top 5 most likely diseases'
-    )
-
-    # 시각화 결과 출력
-    st.write(bar_chart)
+    # options에 선택된 증상들을 new_symptoms에 할당
+    new_symptoms = options
+    
+    # new_symptoms를 이진 특성으로 인코딩
+    new_symptoms_encoded = pd.DataFrame(0, index=[0], columns=X.columns)
+    for symptom in new_symptoms:
+        if symptom.strip() in new_symptoms_encoded.columns:
+            new_symptoms_encoded[symptom.strip()] = 1
+    
+    # 모델을 사용하여 새로운 증상에 대한 예측 수행
+    prediction = model.predict(new_symptoms_encoded)
+    st.write("예측된 병명:", prediction)
 
     #### 병 설명
     st.subheader("Explaining Your Diagnosis")
