@@ -18,7 +18,7 @@ if rad == "Home":
 
     # 첫 번째 컬럼에는 이미지를 표시
     with col1:
-        st.image("SymptomSnap.png", width=50)
+        st.image("SymptomSnap.png", width=100)
 
     # 두 번째 컬럼에는 타이틀 및 텍스트를 표시
     with col2:
