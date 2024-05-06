@@ -7,7 +7,7 @@ from sklearn.ensemble import RandomForestClassifier
 import matplotlib.pyplot as plt
 
 #building the sidebar of the web app which will help us navigate through the different sections of the entire application
-rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide", "Condition-Based Medicine Guide"])
+rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom Checker", "Symptom-Based Disease Guide", "Condition-Based Medicine Guide"])
 
 #Home Page
 
@@ -27,8 +27,33 @@ if rad == "Home":
         st.header("Find Answer to Your Symptoms")
         st.text("Input your symptoms and discover possible conditions and treatments.")
         st.text("The Following Guides Are Available ->")
-        st.text("1. Symptom-Based Disease Guide")
-        st.text("2. Condition-Based Medicine Guide")
+        st.text("1. Symptom Checker")
+        st.text("2. Symptom-Based Disease Guide")
+        st.text("3. Condition-Based Medicine Guide")
+
+if rad=="Symptom Checker":
+    st.title('SymptomSnap')
+    st.subheader("Predicting Diseases from Symptoms")
+    df = pd.read_csv('Symptom_Checker.csv')
+    # region 선택
+    selected_region = st.selectbox('Select a region', df['region'].unique())
+    
+    # 선택된 region에 해당하는 sub-region 필터링
+    sub_regions = df[df['region'] == selected_region]['sub-region'].unique()
+    
+    # sub-region 선택
+    selected_sub_region = st.selectbox('Select a sub-region', sub_regions)
+    
+    # 선택된 sub-region에 해당하는 conditions 필터링
+    conditions = df[(df['region'] == selected_region) & (df['sub-region'] == selected_sub_region)]['conditions']
+    
+    # condition 선택
+    selected_condition = st.selectbox('Select a condition', conditions)
+    
+    # 선택된 condition에 해당하는 symptoms 표시
+    description = df[(df['region'] == selected_region) & (df['sub-region'] == selected_sub_region) & (df['conditions'] == selected_condition)]['symptoms'].iloc[0]
+    st.write('Description:', description)
+
 
 # CSV 파일 로드
 data = pd.read_csv("Disease_Symptom.csv")
