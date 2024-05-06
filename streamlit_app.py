@@ -33,7 +33,7 @@ if rad == "Home":
 
 if rad=="Symptom Checker":
     st.title('SymptomSnap')
-    st.subheader("Predicting Diseases from Symptoms")
+    st.subheader("Find Symptoms")
     df = pd.read_csv('Symptom_Checker.csv')
     # region 선택
     selected_region = st.selectbox('Select a region', df['region'].unique())
