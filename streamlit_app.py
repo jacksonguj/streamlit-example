@@ -14,7 +14,7 @@ rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide", "
 #displays all the available disease prediction options in the web app
 if rad=="Home":
     st.title("SymptomSnap")
-    st.image("SymptomSnap.png", width=100)
+    st.image("SymptomSnap.png", width=50)
     st.image("Medical Prediction Home Page.jpg")
     st.header("Find Answer to Your Symptoms")
     st.text("Input your symptoms and discover possible conditions and treatments.")
