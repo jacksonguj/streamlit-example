@@ -52,7 +52,7 @@ if rad=="Symptom Checker":
     
     # 선택된 condition에 해당하는 symptoms 표시
     description = df[(df['region'] == selected_region) & (df['sub-region'] == selected_sub_region) & (df['conditions'] == selected_condition)]['symptoms'].iloc[0]
-    st.write('Description:', description)
+    st.write('Possible Symptoms:', description)
 
 
 # CSV 파일 로드
