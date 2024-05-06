@@ -225,7 +225,7 @@ if rad=="Condition-Based Medicine Guide":
     conditions = list(set(conditions))
     
     # 빈 값을 제거
-    conditions = [condition for condition in conditions if pd.notna(condition)]
+    conditions = sorted([condition for condition in conditions if pd.notna(condition)])
 
     
     options = st.multiselect(
