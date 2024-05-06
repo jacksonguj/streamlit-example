@@ -12,15 +12,23 @@ rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide", "
 #Home Page
 
 #displays all the available disease prediction options in the web app
-if rad=="Home":
-    st.title("SymptomSnap")
-    st.image("SymptomSnap.png", width=50)
-    st.image("Medical Prediction Home Page.jpg")
-    st.header("Find Answer to Your Symptoms")
-    st.text("Input your symptoms and discover possible conditions and treatments.")
-    st.text("The Following Guides Are Available ->")
-    st.text("1. Symptom-Based Disease Guide")
-    st.text("2. Condition-Based Medicine Guide")
+if rad == "Home":
+    # 컬럼 레이아웃 생성
+    col1, col2 = st.columns([2, 8])
+
+    # 첫 번째 컬럼에는 이미지를 표시
+    with col1:
+        st.image("SymptomSnap.png", width=50)
+
+    # 두 번째 컬럼에는 타이틀 및 텍스트를 표시
+    with col2:
+        st.title("SymptomSnap")
+        st.image("Medical Prediction Home Page.jpg")
+        st.header("Find Answer to Your Symptoms")
+        st.text("Input your symptoms and discover possible conditions and treatments.")
+        st.text("The Following Guides Are Available ->")
+        st.text("1. Symptom-Based Disease Guide")
+        st.text("2. Condition-Based Medicine Guide")
 
 # CSV 파일 로드
 data = pd.read_csv("Disease_Symptom.csv")
