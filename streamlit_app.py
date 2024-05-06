@@ -13,7 +13,8 @@ rad=st.sidebar.radio("Navigation Menu",["Home", "Symptom-Based Disease Guide", "
 
 #displays all the available disease prediction options in the web app
 if rad=="Home":
-    st.title("SymptomSnap")
+    #st.title("SymptomSnap")
+    st.markdown("<h1 style='display: inline;'>SymptomSnap</h1>", unsafe_allow_html=True)
     st.image("SymptomSnap.png", width=100)
     st.image("Medical Prediction Home Page.jpg")
     st.header("Find Answer to Your Symptoms")
