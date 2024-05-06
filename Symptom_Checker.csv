@@ -1,0 +1,50 @@
+﻿region,sub-region,conditions,symptoms
+head,scalp,bald spots,Alopecia Areata
+head,scalp,hair dryness,"Hypothyroidism, Iron Deficiency Anemia"
+head,scalp,headache,"Tension Headache, Medicaiton Overuse Headache, Migraine Headache"
+head,scalp,itchy scalp,"Iron Deficiency Anemia, Hypothyroidism, Scabies"
+head,forehead,fatigue,"Endogenous Depression, Hypothyroidism, Drug Allergy, Iron Deficiency Anemia"
+head,forehead,fever,"Bacterial Pneumonia, Viral Pneumonia, Influenza (Flu), Strep Throat"
+head,forehead,forehead is tender,"Acute Sinusitis, Chronic Sinusitis"
+head,forehead,headache,"Acute Sinusitis, Chronic Sinusitis"
+head,forehead,headache in fromt of head,"Acute Sinusitis, Chronic Sinusitis, Migraine Headache"
+head,eyes,black eye,"Bleeding In The Eye, Physical Abuse"
+head,eyes,blind spot,"Migraine Headache, Retinal Detachment"
+head,eyes,blurry vision,"Cataracts, Fainting (Vasovagal syncope), Dry Eye Syndrome, Concussion"
+head,eyes,can't look up,
+head,eyes,central vision loss,
+head,eyes,decreased vision,
+head,eyes,disorted vision,
+head,eyes,eye hurs,
+head,eyes,eye pain,
+head,nose,bloody nose,
+head,nose,dry nasal passages,
+head,nose,hay fever,
+head,nose,head congestion,
+head,nose,itchy nose,
+head,nose,nasal sinus draining,
+head,nose,nasal sinus feels full,
+head,nose,nasal sinus pain,
+head,ears,,
+head,face,,
+head,mouth,,
+head,jaw,,
+chest,upper chest,,
+chest,sternum,,
+chest,breast,,
+abdomen,upper abdomen,,
+abdomen,epigastric,,
+abdomen,lower abdomen,,
+arms,shoulder,,
+arms,armpit,,
+arms,upper arm,,
+arms,elbow,,
+arms,forearm,,
+arms,wrist,,
+arms,hand,,
+arms,finger,,
+neck,neck,,
+pelvis,,,
+back,,,
+buttocks,,,
+legs,,,
